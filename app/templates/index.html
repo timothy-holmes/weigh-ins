@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if current_user.is_authenticated %}
+        <h1>Hi, {{ current_user.username }}!</h1>
+        <h3><a href={{ url_for('add_weighin') }}>Add Weigh-In</h3>
+        <h3><a href={{ url_for('graph_weight') }}>Show Graph</h3>
+    {% else %}
+        <h3><a href={{ url_for('login') }}>Login</a></h3>
+    {% endif %}
+{% endblock %}

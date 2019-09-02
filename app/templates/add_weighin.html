@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Add Weigh-In</h1>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.weight.label }}<br>
+            {{ form.weight(size=32) }}<br>
+            {% for error in form.weight.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.bf.label }}<br>
+            {{ form.bf(size=32) }}<br>
+            {% for error in form.bf.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.wdate.label }}<br>
+            {{ form.wdate(size=32) }}<br>
+            {% for error in form.wdate.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.wtime.label }}<br>
+            {{ form.wtime(size=32) }}<br>
+            {% for error in form.wtime.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}

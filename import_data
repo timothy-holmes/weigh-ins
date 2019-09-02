@@ -1,0 +1,12 @@
+# import script
+
+s = open('data.csv', mode='r', encoding='utf-8-sig').read()
+open('data.csv', mode='w', encoding='utf-8').write(s)
+
+# read in CSV
+
+with open('data.csv') as csvfile:
+    reader = csv.DictReader(csvfile)
+    for row in reader:
+        w = WeighIn(user_id=0,weight=row['Weight'],bf=row['BF'],time=datetime.strptime(row['Time'],'%H:%M'),date=datetime.strptime(row['Date'],'%d/%m/%Y'))
+        db.session.add(w)
