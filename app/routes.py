@@ -5,6 +5,11 @@ from app.forms import LoginForm, WeighInForm
 from app.models import User, WeighIn
 from app.processing import get_weight_bf_graph
 
+def has_no_empty_params(rule): # for use with site-map route
+    defaults = rule.defaults if rule.defaults is not None else ()
+    arguments = rule.arguments if rule.arguments is not None else ()
+    return len(defaults) >= len(arguments)
+
 @app.route('/')
 @app.route('/index')
 def index():
@@ -15,7 +20,7 @@ def index():
     
 @app.route('/favicon.ico')
 def favicon():
-    return redirect(url_for('static', filename='favicon.ico'))
+    return send_file(url_for('static', filename='favicon.ico'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -60,3 +65,14 @@ def graph_weight():
         return redirect(url_for('login'))
     graph_obj = get_weight_bf_graph(user_id=1)
     return send_file(graph_obj,attachment_filename='plot.png',mimetype='image/png')
+
+@app.route("/site-map")
+def site_map():
+    links = []
+    for rule in app.url_map.iter_rules():
+        # Filter out rules we can't navigate to in a browser
+        # and rules that require parameters
+        if "GET" in rule.methods and has_no_empty_params(rule):
+            url = url_for(rule.endpoint, **(rule.defaults or {}))
+            links.append((url, rule.endpoint))
+    return render_template('site_map.html', title='Site Map', links=links)
