@@ -12,6 +12,10 @@ def index():
         flash('You must log in to use app.')
         return redirect(url_for('login'))
     return render_template('index.html', title='Home')
+    
+@app.route('/favicon.ico')
+def favicon():
+    return redirect(url_for('static', filename='favicon.ico'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
