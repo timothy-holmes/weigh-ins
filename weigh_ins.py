@@ -3,8 +3,6 @@ from app.models import User, WeighIn
 import csv
 from datetime import datetime
 
-application = app
-
 @app.shell_context_processor
 def make_shell_context():
     return {'db': db, 'User': User, 'WeighIn': WeighIn}
