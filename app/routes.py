@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for, send_file
 from app import app, db
-from flask_login import current_user, login_user
+from flask_login import current_user, login_user, logout_user
 from app.forms import LoginForm, WeighInForm
 from app.models import User, WeighIn
 from app.processing import get_weight_bf_graph, copy_filelike_to_file
@@ -42,6 +42,9 @@ def logout():
     
 @app.route('/add-weigh-in', methods=['GET', 'POST'])
 def add_weighin():
+    if current_user.is_anonymous:
+        flash('You must log in to add weigh-in.')
+        return redirect(url_for('login'))
     form = WeighInForm()
     if form.validate_on_submit():
         w = WeighIn(
