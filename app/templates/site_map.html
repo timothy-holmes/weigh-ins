@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block app_content %}
     {% for url, endpoint in links %}
         <a href={{ url }}>{{ endpoint }}</a><br>
     {% endfor %}

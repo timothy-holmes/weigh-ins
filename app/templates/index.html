@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block app_content %}
     {% if current_user.is_authenticated %}
         <h1>Hi, {{ current_user.username }}!</h1>
         <h3><a href={{ url_for('add_weighin') }}>Add Weigh-In</h3>

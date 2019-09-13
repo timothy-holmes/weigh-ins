@@ -66,3 +66,10 @@ def get_weight_bf_graph(user_id):
     bytes_image.seek(0)
     
     return bytes_image
+    
+def copy_filelike_to_file(src, dest, bufsize=16384):
+    while True:
+        buf = src.read(bufsize)
+        if not buf:
+            break
+        dest.write(buf)

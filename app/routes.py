@@ -3,7 +3,10 @@ from app import app, db
 from flask_login import current_user, login_user
 from app.forms import LoginForm, WeighInForm
 from app.models import User, WeighIn
-from app.processing import get_weight_bf_graph
+from app.processing import get_weight_bf_graph, copy_filelike_to_file
+from werkzeug.utils import secure_filename
+
+import os, time
 
 def has_no_empty_params(rule): # for use with site-map route
     defaults = rule.defaults if rule.defaults is not None else ()
@@ -59,8 +62,11 @@ def graph_weight():
     if current_user.is_anonymous:
         flash('You must log in to see graphs.')
         return redirect(url_for('login'))
-    graph_obj = get_weight_bf_graph(user_id=1)
-    return send_file(graph_obj,attachment_filename='plot.png',mimetype='image/png')
+    graph_obj = get_weight_bf_graph(user_id=current_user.id)
+    graph_filename = secure_filename(str(current_user.id) + '-' + time.strftime('%Y%m%d%H%M%S', time.gmtime(time.time())) + '.png')
+    with open(os.path.join('app', 'static', 'graph', graph_filename), "wb") as outfile:
+        copy_filelike_to_file(src=graph_obj, dest=outfile)
+    return render_template('graph.html',img_src=url_for('static',filename=('graph/'+graph_filename)),title='Curren Weight Graph')
 
 @app.route("/site-map")
 def site_map():
