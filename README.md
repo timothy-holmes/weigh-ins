@@ -1,3 +1,7 @@
-# Welcome to Microblog!
+# Simple weight logger
 
-This is an example application featured in my [Flask Mega-Tutorial](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world). See the tutorial for instructions on how to work with it.
+CRUD application I used briefly to record my weight.
+
+Hosted at timothyholmes.com.au/weight:
+- spinning up may take up to 30 seconds if site hasn't been visited in a few days
+- use 'Tim' and 'tim' for password
